@@ -9,15 +9,14 @@ import Reports from './pages/Reports';
 const SidebarLink: React.FC<{ to: string, icon: string, label: string }> = ({ to, icon, label }) => {
   const location = useLocation();
   const isActive = location.pathname === to || (to === '/' && location.pathname === '');
-  
+
   return (
-    <Link 
-      to={to} 
-      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg font-medium transition-all ${
-        isActive 
-          ? 'bg-primary/10 text-primary border-r-2 border-primary' 
+    <Link
+      to={to}
+      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg font-medium transition-all ${isActive
+          ? 'bg-primary/10 text-primary border-r-2 border-primary'
           : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-      }`}
+        }`}
     >
       <span className="material-symbols-outlined text-[22px]">{icon}</span>
       <span className="text-sm">{label}</span>
@@ -30,13 +29,13 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <div className="flex h-screen overflow-hidden bg-slate-50">
       {/* Sidebar */}
       <aside className="w-64 bg-white border-r border-slate-200 flex flex-col shrink-0">
-        <div class="p-6 flex items-center gap-3">
-          <div class="bg-primary size-10 rounded-lg flex items-center justify-center text-white">
-            <span class="material-symbols-outlined">water_drop</span>
+        <div className="p-6 flex items-center gap-3">
+          <div className="bg-primary size-10 rounded-lg flex items-center justify-center text-white">
+            <span className="material-symbols-outlined">water_drop</span>
           </div>
           <div>
-            <h1 class="text-slate-900 text-sm font-bold leading-tight">PDAM Accounting</h1>
-            <p class="text-slate-500 text-[10px] font-medium uppercase tracking-wider">Tirta Digital</p>
+            <h1 className="text-slate-900 text-sm font-bold leading-tight">PDAM Accounting</h1>
+            <p className="text-slate-500 text-[10px] font-medium uppercase tracking-wider">Tirta Digital</p>
           </div>
         </div>
 
@@ -45,7 +44,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <SidebarLink to="/billing" icon="receipt_long" label="Tagihan" />
           <SidebarLink to="/customers" icon="group" label="Pelanggan" />
           <SidebarLink to="/reports" icon="bar_chart" label="Laporan & Analitik" />
-          
+
           <div className="pt-6 pb-2">
             <p className="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Administrasi</p>
           </div>
@@ -76,14 +75,14 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <div className="flex items-center gap-4 w-1/3">
             <div className="relative w-full">
               <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[18px]">search</span>
-              <input 
-                className="w-full bg-slate-50 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary transition-all placeholder:text-slate-400" 
-                placeholder="Cari ID Pelanggan, No. Tagihan..." 
+              <input
+                className="w-full bg-slate-50 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary transition-all placeholder:text-slate-400"
+                placeholder="Cari ID Pelanggan, No. Tagihan..."
                 type="text"
               />
             </div>
           </div>
-          
+
           <div className="flex items-center gap-5">
             <button className="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-primary hover:bg-slate-100 rounded-full transition-colors relative">
               <span className="material-symbols-outlined">notifications</span>
@@ -96,7 +95,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 <p className="text-[10px] text-slate-500 uppercase font-bold tracking-tight">ID Kantor: JK-001</p>
               </div>
               <div className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400">
-                 <span className="material-symbols-outlined">corporate_fare</span>
+                <span className="material-symbols-outlined">corporate_fare</span>
               </div>
             </div>
           </div>
