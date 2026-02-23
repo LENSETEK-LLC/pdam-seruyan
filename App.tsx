@@ -1,10 +1,15 @@
 
-import React, { useState } from 'react';
-import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { HashRouter, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
+import { onAuthStateChanged, signOut, User } from 'firebase/auth';
+import { auth } from './services/firebase';
 import Dashboard from './pages/Dashboard';
 import Billing from './pages/Billing';
 import Customers from './pages/Customers';
 import Reports from './pages/Reports';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 
 const SidebarLink: React.FC<{ to: string, icon: string, label: string }> = ({ to, icon, label }) => {
   const location = useLocation();
@@ -14,8 +19,8 @@ const SidebarLink: React.FC<{ to: string, icon: string, label: string }> = ({ to
     <Link
       to={to}
       className={`flex items-center gap-3 px-3 py-2.5 rounded-lg font-medium transition-all ${isActive
-          ? 'bg-primary/10 text-primary border-r-2 border-primary'
-          : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+        ? 'bg-primary/10 text-primary border-r-2 border-primary'
+        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
         }`}
     >
       <span className="material-symbols-outlined text-[22px]">{icon}</span>
@@ -24,7 +29,18 @@ const SidebarLink: React.FC<{ to: string, icon: string, label: string }> = ({ to
   );
 };
 
-const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const Layout: React.FC<{ children: React.ReactNode, user: User | null }> = ({ children, user }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/login');
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
+  };
+
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50">
       {/* Sidebar */}
@@ -58,10 +74,14 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               <span className="material-symbols-outlined text-xl">person</span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-slate-900 truncate">Andri Wijaya</p>
-              <p className="text-[10px] text-slate-500 truncate">Senior Accountant</p>
+              <p className="text-xs font-bold text-slate-900 truncate">{user?.displayName || (user?.email?.split('@')[0]) || 'User'}</p>
+              <p className="text-[10px] text-slate-500 truncate">{user?.email || 'Unauthorized'}</p>
             </div>
-            <button className="text-slate-400 hover:text-rose-500 transition-colors">
+            <button
+              onClick={handleLogout}
+              className="text-slate-400 hover:text-rose-500 transition-colors p-1"
+              title="Keluar"
+            >
               <span className="material-symbols-outlined text-lg">logout</span>
             </button>
           </div>
@@ -111,17 +131,37 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 };
 
 const App: React.FC = () => {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
   return (
     <HashRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/billing" element={<Billing />} />
-          <Route path="/customers" element={<Customers />} />
-          <Route path="/reports" element={<Reports />} />
-          <Route path="*" element={<Dashboard />} />
-        </Routes>
-      </Layout>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route
+          path="*"
+          element={
+            <ProtectedRoute>
+              <Layout user={user}>
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/billing" element={<Billing />} />
+                  <Route path="/customers" element={<Customers />} />
+                  <Route path="/reports" element={<Reports />} />
+                  <Route path="*" element={<Dashboard />} />
+                </Routes>
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
     </HashRouter>
   );
 };
