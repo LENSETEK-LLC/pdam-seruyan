@@ -9,6 +9,7 @@ import Customers from './pages/Customers';
 import Reports from './pages/Reports';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Settings from './pages/Settings';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
 const SidebarLink: React.FC<{ to: string, icon: string, label: string }> = ({ to, icon, label }) => {
@@ -20,7 +21,7 @@ const SidebarLink: React.FC<{ to: string, icon: string, label: string }> = ({ to
       to={to}
       className={`flex items-center gap-3 px-3 py-2.5 rounded-lg font-medium transition-all ${isActive
         ? 'bg-primary/10 text-primary border-r-2 border-primary'
-        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white'
         }`}
     >
       <span className="material-symbols-outlined text-[22px]">{icon}</span>
@@ -44,7 +45,7 @@ const Layout: React.FC<{ children: React.ReactNode, user: User | null }> = ({ ch
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50">
+    <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-slate-900">
       {/* Overlay for mobile sidebar */}
       {isMobileSidebarOpen && (
         <div
@@ -55,7 +56,7 @@ const Layout: React.FC<{ children: React.ReactNode, user: User | null }> = ({ ch
       )}
 
       {/* Sidebar */}
-      <aside className={`absolute md:relative z-30 bg-white border-r border-slate-200 flex flex-col shrink-0 h-full transition-all duration-300 ease-in-out overflow-hidden ${
+      <aside className={`absolute md:relative z-30 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col shrink-0 h-full transition-all duration-300 ease-in-out overflow-hidden ${
           isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } md:translate-x-0 ${isSidebarCollapsed ? 'md:w-0 md:border-none' : 'w-64'}`}>
         
@@ -67,8 +68,8 @@ const Layout: React.FC<{ children: React.ReactNode, user: User | null }> = ({ ch
             <span className="material-symbols-outlined">water_drop</span>
           </div>
           <div>
-            <h1 className="text-slate-900 text-sm font-bold leading-tight">PDAM Accounting</h1>
-            <p className="text-slate-500 text-[10px] font-medium uppercase tracking-wider">Tirta Digital</p>
+            <h1 className="text-slate-900 dark:text-white text-sm font-bold leading-tight">PDAM Accounting</h1>
+            <p className="text-slate-500 dark:text-slate-400 text-[10px] font-medium uppercase tracking-wider">Tirta Digital</p>
           </div>
         </div>
 
@@ -85,14 +86,14 @@ const Layout: React.FC<{ children: React.ReactNode, user: User | null }> = ({ ch
           <SidebarLink to="/help" icon="help" label="Pusat Bantuan" />
         </nav>
 
-          <div className="p-4 border-t border-slate-200">
-          <div className="flex items-center gap-3 p-2 bg-slate-50 rounded-xl">
+          <div className="p-4 border-t border-slate-200 dark:border-slate-700">
+          <div className="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
             <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shrink-0">
               <span className="material-symbols-outlined text-xl">person</span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-slate-900 truncate">{user?.displayName || (user?.email?.split('@')[0]) || 'User'}</p>
-              <p className="text-[10px] text-slate-500 truncate">{user?.email || 'Unauthorized'}</p>
+              <p className="text-xs font-bold text-slate-900 dark:text-white truncate">{user?.displayName || (user?.email?.split('@')[0]) || 'User'}</p>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{user?.email || 'Unauthorized'}</p>
             </div>
             <button
               onClick={handleLogout}
@@ -109,7 +110,7 @@ const Layout: React.FC<{ children: React.ReactNode, user: User | null }> = ({ ch
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
         {/* Top Header */}
-        <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-8 sticky top-0 z-10 shrink-0">
+        <header className="h-16 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between px-4 md:px-8 sticky top-0 z-10 shrink-0">
           <div className="flex items-center gap-4">
             {/* Mobile Hamburger Menu */}
             <button
@@ -130,7 +131,7 @@ const Layout: React.FC<{ children: React.ReactNode, user: User | null }> = ({ ch
             <div className="relative w-full hidden md:block">
               <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[18px]">search</span>
               <input
-                className="w-full bg-slate-50 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary transition-all placeholder:text-slate-400"
+                className="w-full bg-slate-50 dark:bg-slate-700 dark:text-white border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary transition-all placeholder:text-slate-400"
                 placeholder="Cari ID Pelanggan, No. Tagihan..."
                 type="text"
               />
@@ -138,17 +139,17 @@ const Layout: React.FC<{ children: React.ReactNode, user: User | null }> = ({ ch
           </div>
 
           <div className="flex items-center gap-5">
-            <button className="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-primary hover:bg-slate-100 rounded-full transition-colors relative">
+            <button className="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors relative">
               <span className="material-symbols-outlined">notifications</span>
               <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 border-2 border-white rounded-full"></span>
             </button>
-            <div className="h-6 w-px bg-slate-200"></div>
+            <div className="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
             <div className="flex items-center gap-3 cursor-pointer group">
               <div className="text-right hidden sm:block">
-                <p className="text-xs font-bold text-slate-900 group-hover:text-primary transition-colors">Unit Pelayanan Jakarta</p>
-                <p className="text-[10px] text-slate-500 uppercase font-bold tracking-tight">ID Kantor: JK-001</p>
+                <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Unit Pelayanan Jakarta</p>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-bold tracking-tight">ID Kantor: JK-001</p>
               </div>
-              <div className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400">
+              <div className="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-400">
                 <span className="material-symbols-outlined">corporate_fare</span>
               </div>
             </div>
@@ -189,6 +190,7 @@ const App: React.FC = () => {
                   <Route path="/billing" element={<Billing />} />
                   <Route path="/customers" element={<Customers />} />
                   <Route path="/reports" element={<Reports />} />
+                  <Route path="/settings" element={<Settings />} />
                   <Route path="*" element={<Dashboard />} />
                 </Routes>
               </Layout>
