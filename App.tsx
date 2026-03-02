@@ -56,54 +56,53 @@ const Layout: React.FC<{ children: React.ReactNode, user: User | null }> = ({ ch
       )}
 
       {/* Sidebar */}
-      <aside className={`absolute md:relative z-30 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col shrink-0 h-full transition-all duration-300 ease-in-out overflow-hidden ${
-          isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      <aside className={`absolute md:relative z-30 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col shrink-0 h-full transition-all duration-300 ease-in-out overflow-hidden ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } md:translate-x-0 ${isSidebarCollapsed ? 'md:w-0 md:border-none' : 'w-64'}`}>
-        
+
         {/* Sidebar Content Wrapper */}
         <div className="w-64 h-full flex flex-col overflow-hidden">
 
           <div className="p-6 flex items-center gap-3">
-          <div className="bg-primary size-10 rounded-lg flex items-center justify-center text-white">
-            <span className="material-symbols-outlined">water_drop</span>
+            <div className="bg-primary size-10 rounded-lg flex items-center justify-center text-white">
+              <span className="material-symbols-outlined">water_drop</span>
+            </div>
+            <div>
+              <h1 className="text-slate-900 dark:text-white text-sm font-bold leading-tight">PDAM Accounting</h1>
+              <p className="text-slate-500 dark:text-slate-400 text-[10px] font-medium uppercase tracking-wider">Tirta Digital</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-slate-900 dark:text-white text-sm font-bold leading-tight">PDAM Accounting</h1>
-            <p className="text-slate-500 dark:text-slate-400 text-[10px] font-medium uppercase tracking-wider">Tirta Digital</p>
-          </div>
-        </div>
 
           <nav className="flex-1 px-4 py-4 space-y-1">
-          <SidebarLink to="/" icon="dashboard" label="Dashboard" />
-          <SidebarLink to="/billing" icon="receipt_long" label="Tagihan" />
-          <SidebarLink to="/customers" icon="group" label="Pelanggan" />
-          <SidebarLink to="/reports" icon="bar_chart" label="Laporan & Analitik" />
+            <SidebarLink to="/" icon="dashboard" label="Dashboard" />
+            <SidebarLink to="/billing" icon="receipt_long" label="Tagihan" />
+            <SidebarLink to="/customers" icon="group" label="Pelanggan" />
+            <SidebarLink to="/reports" icon="bar_chart" label="Laporan & Analitik" />
 
             <div className="pt-6 pb-2">
-            <p className="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Administrasi</p>
-          </div>
-          <SidebarLink to="/settings" icon="settings" label="Pengaturan" />
-          <SidebarLink to="/help" icon="help" label="Pusat Bantuan" />
-        </nav>
+              <p className="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Administrasi</p>
+            </div>
+            <SidebarLink to="/settings" icon="settings" label="Atur Ha" />
+            <SidebarLink to="/help" icon="help" label="Pusat Bantuan" />
+          </nav>
 
           <div className="p-4 border-t border-slate-200 dark:border-slate-700">
-          <div className="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
-            <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shrink-0">
-              <span className="material-symbols-outlined text-xl">person</span>
+            <div className="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
+              <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shrink-0">
+                <span className="material-symbols-outlined text-xl">person</span>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-slate-900 dark:text-white truncate">{user?.displayName || (user?.email?.split('@')[0]) || 'User'}</p>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{user?.email || 'Unauthorized'}</p>
+              </div>
+              <button
+                onClick={handleLogout}
+                className="text-slate-400 hover:text-rose-500 transition-colors p-1"
+                title="Keluar"
+              >
+                <span className="material-symbols-outlined text-lg">logout</span>
+              </button>
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-slate-900 dark:text-white truncate">{user?.displayName || (user?.email?.split('@')[0]) || 'User'}</p>
-              <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{user?.email || 'Unauthorized'}</p>
-            </div>
-            <button
-              onClick={handleLogout}
-              className="text-slate-400 hover:text-rose-500 transition-colors p-1"
-              title="Keluar"
-            >
-              <span className="material-symbols-outlined text-lg">logout</span>
-            </button>
           </div>
-        </div>
         </div>
       </aside>
 
